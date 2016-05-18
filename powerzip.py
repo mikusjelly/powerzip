@@ -1,7 +1,7 @@
 import io
 import zipfile
 
-class PowerZipfile:
+class PowerZip:
 
     def __init__(self, zipfile_path):
         with open(zipfile_path, mode='rb') as f:
