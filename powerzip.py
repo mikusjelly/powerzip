@@ -1,12 +1,21 @@
 import io
 import zipfile
+import os
+
 
 class PowerZip:
 
     def __init__(self, zipfile_path):
-        with open(zipfile_path, mode='rb') as f:
-            self.data = io.BytesIO(f.read())
-            self.pzip = zipfile.ZipFile(self.data)
+        if os.path.exists(zipfile_path):
+            with open(zipfile_path, mode='rb') as f:
+                self.data = io.BytesIO(f.read())
+                self.pzip = zipfile.ZipFile(self.data)
+        else:
+            zf = zipfile.ZipFile(zipfile_path, 'w', zipfile.ZIP_DEFLATED)
+            zf.close()
+            with open(zipfile_path, mode='rb') as f:
+                self.data = io.BytesIO(f.read())
+                self.pzip = zipfile.ZipFile(self.data)
 
     def close(self):
         self.pzip.close()
